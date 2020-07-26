@@ -9,4 +9,4 @@ The overall data is captured into a centralized database -- i chose mysql runnin
 https://raw.githubusercontent.com/sysjay/things/master/things.svg
 
 ![Alt text](Flow Diagram)
-<img src="https://raw.githubusercontent.com/sysjay/things/master/things.svg">
+<img src="https://github.com/sysjay/things/blob/master/images/things.jpg">
