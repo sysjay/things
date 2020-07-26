@@ -12,8 +12,8 @@ The overall data is captured into a centralized database -- i chose mysql runnin
 
 ## Supported Sensors
 Sensor support mostly based on i2C bus.
-BME280 -- Barometric Pressure, Temperature, and Humidity
-
-HC-SR501 -- PIR Motion Sensor
-
-NRG #40C -- Annometer -- customized circut
+>> BME280 -- Barometric Pressure, Temperature, and Humidity
+>>
+>> HC-SR501 -- PIR Motion Sensor
+>> 
+>> NRG #40C -- Annometer -- customized circut
