@@ -1,0 +1,8 @@
+#!/bin/bash
+# transfer files to ESP microcontroller
+echo Send data to the ESP devide via webrpl_cli.pi 
+echo parm1 = $1
+echo parm2 = $2
+webrepl_cli.py -p $1 boot.py $2:boot.py
+webrepl_cli.py -p $1 main.py $2:main.py
+webrepl_cli.py -p $1 BME280.py $2:BME280.py

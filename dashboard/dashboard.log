@@ -1,0 +1,135 @@
+[2020-07-05 19:41:37 -0400] [1472] [INFO] Starting gunicorn 19.9.0
+[2020-07-05 19:41:37 -0400] [1472] [INFO] Listening at: http://0.0.0.0:5000 (1472)
+[2020-07-05 19:41:37 -0400] [1472] [INFO] Using worker: sync
+[2020-07-05 19:41:37 -0400] [1476] [INFO] Booting worker with pid: 1476
+[2020-07-05 19:41:37 -0400] [1478] [INFO] Booting worker with pid: 1478
+[2020-07-05 19:41:38 -0400] [1479] [INFO] Booting worker with pid: 1479
+[2020-07-05 19:41:38 -0400] [1480] [INFO] Booting worker with pid: 1480
+[2020-07-05 19:41:38 -0400] [1484] [INFO] Booting worker with pid: 1484
+[2020-07-05 19:41:38 -0400] [1488] [INFO] Booting worker with pid: 1488
+[2020-07-05 19:41:38 -0400] [1489] [INFO] Booting worker with pid: 1489
+[2020-07-05 19:41:38 -0400] [1490] [INFO] Booting worker with pid: 1490
+[2020-07-05 19:41:38 -0400] [1491] [INFO] Booting worker with pid: 1491
+[2020-07-05 20:14:02 -0400] [1472] [INFO] Handling signal: hup
+[2020-07-05 20:14:02 -0400] [1472] [INFO] Hang up: Master
+[2020-07-05 20:14:02 -0400] [3979] [INFO] Booting worker with pid: 3979
+[2020-07-05 20:14:02 -0400] [3981] [INFO] Booting worker with pid: 3981
+[2020-07-05 20:14:02 -0400] [3984] [INFO] Booting worker with pid: 3984
+[2020-07-05 20:14:02 -0400] [3990] [INFO] Booting worker with pid: 3990
+[2020-07-05 20:14:02 -0400] [3985] [INFO] Booting worker with pid: 3985
+[2020-07-05 20:14:02 -0400] [3986] [INFO] Booting worker with pid: 3986
+[2020-07-05 20:14:02 -0400] [3992] [INFO] Booting worker with pid: 3992
+[2020-07-05 20:14:02 -0400] [3982] [INFO] Booting worker with pid: 3982
+[2020-07-05 20:14:02 -0400] [3980] [INFO] Booting worker with pid: 3980
+[2020-07-05 22:18:46 -0400] [1472] [CRITICAL] WORKER TIMEOUT (pid:3990)
+[2020-07-05 22:18:46 -0400] [3990] [INFO] Worker exiting (pid: 3990)
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 1871
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 1871
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 1871
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 1871
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 1627
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 1627
+[2020-07-05 22:18:46 -0400] [10549] [INFO] Booting worker with pid: 10549
+[2020-07-05 22:53:51 -0400] [1472] [INFO] Handling signal: term
+[2020-07-05 22:53:51 -0400] [3979] [INFO] Worker exiting (pid: 3979)
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2233
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2131
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2131
+[2020-07-05 22:53:51 -0400] [3981] [INFO] Worker exiting (pid: 3981)
+[2020-07-05 22:53:51 -0400] [3980] [INFO] Worker exiting (pid: 3980)
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2136
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2136
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2233
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2131
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2131
+[2020-07-05 22:53:51 -0400] [3982] [INFO] Worker exiting (pid: 3982)
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2136
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2136
+[2020-07-05 22:53:51 -0400] [3985] [INFO] Worker exiting (pid: 3985)
+[2020-07-05 22:53:51 -0400] [3984] [INFO] Worker exiting (pid: 3984)
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2131
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2131
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2233
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2136
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2136
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2136
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2136
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2131
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2131
+[2020-07-05 22:53:51 -0400] [3986] [INFO] Worker exiting (pid: 3986)
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 1871
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 1871
+[2020-07-05 22:53:51 -0400] [3992] [INFO] Worker exiting (pid: 3992)
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 2234
+[2020-07-05 22:53:51 -0400] [10549] [INFO] Worker exiting (pid: 10549)
+inside
+SQL: select * from sensortbl WHERE devtype = 'TempC' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 3477
+SQL: select * from sensortbl WHERE devtype = 'humidity' and event_ts >= now() - INTERVAL 2 HOUR
+rows     : 3477
+[2020-07-05 22:53:51 -0400] [1472] [INFO] Shutting down: Master

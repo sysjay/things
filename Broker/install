@@ -1,0 +1,3 @@
+cp --verbose jthingsbrkr.service /etc/systemd/system/
+systemctl start jthingsbrkr
+systemctl enable jthingsbrkr 

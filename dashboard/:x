@@ -1,0 +1,111 @@
+'''
+Created on Jun 20, 2020
+
+@author: jay
+Dash Layout  tutorial from https://dash.plotly.com/layout
+
+'''
+# -*- coding: utf-8 -*-
+import json
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import pandas as pd
+import plotly.express as px
+from dash.dependencies import Input, Output
+
+
+import mysql.connector
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="sensors",
+    password="password",
+    database="sensordata"
+)
+
+import random
+import datetime
+
+sql = "SELECT * FROM sensortbl WHERE devtype = 'TempC'"
+#sql = "SELECT * FROM sensortbl"
+df = pd.read_sql(sql, con=mydb)
+
+
+#from padas.io.json import json_normalize
+colors = {
+        'background': '#111111',
+        'text': '#7FDBFF'
+}
+
+
+
+def charts(fld,default='Y'):
+#    fig1 = px.bar(data,x='ts2',y=fld)
+    sql = "SELECT * FROM sensortbl WHERE devtype = '" + fld + "'"
+    print("SQL:", sql)
+    data = pd.read_sql(sql, con=mydb)
+    #data = pd.read_csv('~/workspace-sensors2/esp8266/sensors.csv')
+    print("rows     :",len(data))
+    fig = px.scatter(data, x="ts2", y="value", color="device")
+    fig.update_layout(plot_bgcolor=colors['background'], paper_bgcolor=colors['background'],
+                      legend=dict(
+                          font=dict(
+                              size=16,
+                              color=colors['text'])))
+    fig.update_yaxes(tickfont=dict(color=colors['text'],size=16),title_font=dict(size=18),color=colors['text'])
+    fig.update_xaxes(tickfont=dict(color=colors['text'],size=16),title_font=dict(size=18),color=colors['text'])
+    return fig
+
+def generate_table(dataframe, max_rows=10):
+    return html.Table([
+        html.Thead(
+            html.Tr([html.Th(col) for col in dataframe.columns])
+        ),
+        html.Tbody([
+            html.Tr([
+                html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
+            ]) for i in range(min(len(dataframe), max_rows))
+        ])
+    ])
+
+
+def main():
+    print("inside")
+    external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+    app7 = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+    app7.layout = html.Div([
+        html.Div(
+
+            style={'backgroundColor': colors['background']},
+
+            children=[
+            html.Div([
+                html.H3(children='Temperature',
+                        style={
+                                'textAlign': 'center',
+                                'color': colors['text']
+                                }                        ),
+                dcc.Graph(id='g1', figure=charts('temperature'))
+            ], className="six columns"),
+
+            html.Div([
+                html.H3(children='Humidity',
+                        style={
+                                'textAlign': 'center',
+                                'color': colors['text']
+                                }
+                ),
+                dcc.Graph(id='g2', figure=charts('humidity'))
+            ], className="six columns"),
+        ], className="row")
+    ])
+    return app
+if __name__ == '__main__':
+    print("Starting..............")
+    print("rows     :",len(data))
+    app = main()
+    app.run_server(debug=True)
+
+    print("ended.................")

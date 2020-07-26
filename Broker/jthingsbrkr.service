@@ -1,0 +1,14 @@
+[Unit]
+Description=Jays Things Broker
+After=network.target
+After=mysqld.service
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=jay
+ExecStart=/usr/local/bin/payloadbrker
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+[Unit]
+Description=Jay's Things Dashboard
+After=network.target
+After=mysqld.service
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=jay
+Group=jay
+RootDirectory=/home/jay/things/dash_sensors
+WorkingDirectory=/home/jay/things/dash_sensors
+ExecStart=/home/jay/things/bin/gunicorn3 index:app.server /
+	 --reload /
+	 --config /home/jay/things/dash_sensors/gunicorn_conf.py /
+	 --pythonpath /home/jay/things/dash_sensors;/home/jay/things/bin
+[Install]
+WantedBy=multi-user.target

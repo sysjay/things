@@ -1,0 +1,9 @@
+#!/bin/sh
+logpath='/home/jay/workspace-sensors2/FirstDashboard/log/'
+logname='dashboard.log'
+####
+### gunicorn3 dashboard:app.server --config gunicorn_conf.py
+###
+cd /home/jay/workspace-sensors2/FirstDashboard/dashboard
+script='gunicorn3 dashboard:app.server --config gunicorn_conf.py'
+$script >> $logpath$logname 2>&1 &

@@ -1,0 +1,8 @@
+#!/bin/sh
+service=jthingsdashbrd
+###
+### gunicorn3 dashboard:app.server --config gunicorn_conf.py
+###
+cp --verbose $service.service /etc/systemd/system/
+systemctl start $service
+systemctl enable $service 
