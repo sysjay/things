@@ -91,7 +91,10 @@ def build_graphs(devtyp, chartyp='line'):
 
     print(plot_layout)
     filter = df["devtype"] == devtyp
+#    filter = (df["device"] == '500')
     dfilter = df[filter]
+#    filter = (dfilter["device"] == '500')
+    pirfilter = dfilter[filter]
     if chartyp == 'line':
         fig = px.line(dfilter, x="event_ts", y="value", color="device")
         fig.update_layout(plot_layout)
@@ -104,12 +107,10 @@ def build_graphs(devtyp, chartyp='line'):
                          symbol="sensor")
         fig.update_layout(font=axis_style)
         graph = dcc.Graph(figure=fig)
-    else:
-        data = [go.Scatter(x=dfilter.index,
-                           y=dfilter['value'],
-                           marker={'color': 'orange'}
-                           )
-                ]
+    elif chartyp == 'line2':
+        data = [go.Scatter(x=dfilter["event_ts"],
+                           y=dfilter['value']
+                           )]
         graph = dcc.Graph(
                     figure={
                         'data': data,
@@ -119,6 +120,24 @@ def build_graphs(devtyp, chartyp='line'):
                                     hovermode='closest'
                                     )
                             })
+    else:
+        data = [go.Scatter(x=dfilter.index,
+                           y=dfilter['value'],
+                           marker={'color': 'orange'}
+                           )
+               ]
+        graph = dcc.Graph(
+                    figure={
+                        'data': data,
+                        'layout': go.Layout(
+                                    title='{} Change'.format(devtyp),
+                                    yaxis={'title': devtyp},
+                                    hovermode='closest',
+        #                            plot_layout,
+                                    font=axis_style
+                                    )
+                            })
+        fig.update_layout(font=axis_style)
 
     tbl = dash_table.DataTable(
             id='table',

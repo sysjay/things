@@ -96,8 +96,8 @@ class MyMQTTClass(mqtt.Client):
 
     def utc_to_local(self, utc_dt):
         return utc_dt.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
-    
-    
+
+
 
     def on_connect(self, mqttc, obj, flags, rc):
         self.l.logit( "rc: "+str(rc))
@@ -122,6 +122,7 @@ class MyMQTTClass(mqtt.Client):
 
             pl3 = pd.DataFrame({
                                 'ts2':         [ts2],
+                                'nrg40':       [y["nrgct"]],
                                 'humidity':    [y["humidity"]],
                                 'temperature': [y["temp"]],
                                 'pressure':    [y['pressure']],
@@ -188,7 +189,7 @@ class MyMQTTClass(mqtt.Client):
 
 
 # #############################################################################################
-# ## beinging of main loop control 
+# ## beinging of main loop control
 # #############################################################################################
 
 logpath = '/home/jay/workspace-sensors2/FirstDashboard/log/'

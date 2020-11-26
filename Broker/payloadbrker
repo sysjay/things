@@ -1,5 +1,5 @@
 #!/bin/sh
-logpath='/home/jay/workspace-sensors2/FirstDashboard/log/'
+logpath='/home/jay/things/log/'
 logname='payload.log'
-script='/home/jay/workspace-sensors2/FirstDashboard/Broker/payloadbrker.py'
-/usr/bin/python3 $script >> $logpath$logname 2>&1
+script='/home/jay/things/Broker/payloadbrker.py'
+/usr/bin/python3 -u $script >> $logpath$logname 2>&1

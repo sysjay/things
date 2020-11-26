@@ -132,37 +132,32 @@ class MyMQTTClass(mqtt.Client):
             self.l.logit("Data###################")
             self.l.logit(
                   msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-            y = json.loads(msg.payload)
-            print ("jDevice:",y["device:"])
-#            self.l.logit("msg        :", msg)
-            self.l.logit("UID        :", y["uid"])
-            self.l.logit("humidity   :", y["humidity"])
-            self.l.logit("temperature:", y["temp"])
-            self.l.logit("pressure   :", y["pressure"])
-            ts2 = datetime.datetime.strptime(y["ts2"], '%Y/%m/%d %H:%M:%S.%f')
-            self.l.logit("tzinfo     :", ts2.tzinfo)
-            self.l.logit("ts2        :", ts2)
-            self.l.logit("utc2Local  :",
-                         self.utc_to_local(ts2))
-            capture_ts = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S.%f")
-            try:
-                val = (y["uid"], y["device:"], "Pressure", y["pressure"], y["ts2"], capture_ts)
-                print ("val=",val)
-                self.dbcursor.execute(self.sql, val)
-                self.dbcon.commit()
-                val = (y["uid"], y["device:"], "Humidity", y["humidity"], ts2, capture_ts)
-                self.dbcursor.execute(self.sql, val)
-                self.dbcon.commit()
-                val = (y["uid"], y["device:"], "TempC", y["temp"], ts2, capture_ts)
-                self.dbcursor.execute(self.sql, val)
-                self.dbcon.commit()
-                print("good")
-            except:
-                #reverting changes because of exception
-                print("Bad")
-                print("Unexpected error:", sys.exc_info()[0])
+            i = 1
 
-                pass
+            capture_ts = datetime.datetime.now().strftime("%y-%m-%d %H:%M:%S.%f")
+            indexkeys = {"uid":"uid","ts2":"ts2","ts":"ts","device:":"device"}
+            y = json.loads(msg.payload)
+            for key in y.keys():
+                i = i + 1
+                if key == "ts2":
+                    ts2 = datetime.datetime.strptime(y["ts2"],
+                                                    '%Y/%m/%d %H:%M:%S.%f')
+                if not key in indexkeys:
+                    print("Key:", i, " = ", key)
+                    self.l.logit(key,y[key])
+                    val = (y["uid"],
+                           y["device:"],
+                           key,
+                           y[key],
+                           ts2,
+                           capture_ts)
+                    print ("val=",val)
+                    self.dbcursor.execute(self.sql, val)
+            self.dbcon.commit()
+
+
+            '''
+            @TODO  need to update the to_csv to follow the database format
 
             pl3 = pd.DataFrame({
                                 'ts2':         [ts2],
@@ -183,6 +178,7 @@ class MyMQTTClass(mqtt.Client):
             print ("len data:", len(self.data.index))
             if not self.csvfileOFF:
                self.data.to_csv(self.csvfile, index=True, mode='a')
+            '''
 
 # @TODO
 # add code to manage memory based on cacheq..  i want to delete old rows
@@ -193,7 +189,6 @@ class MyMQTTClass(mqtt.Client):
             #      0        1      2      3      4       5      6    7
             # "(  2020,     6,    17,     2,    23,      8,    13,  150866)"
             #     YYYY     MM     DD      W     HH      MM     SS   ms
-            print("Data*******************")
 
     def on_publish(self, mqttc, obj, mid):
         print("mid: "+str(mid))

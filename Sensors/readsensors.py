@@ -2,36 +2,28 @@
 import smbus
 import time
 import datetime
-import sys
-import paho.mqtt.client as mqtt 
+import paho.mqtt.client as mqtt
 import json as js
 
 
-#import math
-#from pygments.lexers import business
-#print '\n'.join(sys.path)
-#print ("****")
-#print smbus.__file__
-
 bus = smbus.SMBus(1)
-ADDRESS = 0x20 # address of MCP23017 (ground A0, A1, and A2)
-I2C_ADDR = 0x77# address of BMP080 
+ADDRESS = 0x20         # address of MCP23017 (ground A0, A1, and A2)
+I2C_ADDR = 0x77        # address of BMP080
 I2C_HTU21D = 0X40
-BROKER_ADDRESS="192.168.1.118" 
-BROKER_ADDRESS="fd9a:6f5b:21d1::ee1"
-
-
+BROKER_ADDRESS = "192.168.1.118"
+BROKER_ADDRESS = "fd9a:6f5b:21d1::ee1"
 
 
 class EVENTS:
     def mqtt_sub_cb(self, topic, msg):
         print((topic, msg))
-    
-    def __init__(self,client,broker,uid):
+
+    def __init__(self, client, broker, uid):
         self.counter = 0
         self.errcount = 0
-        self.uid = str(uid) 
-        #self.uid = '{:02x}{:%02x}{:%02x}{:%02x}'.format(uid[0], uid[1], uid[2], uid[3]) 
+        self.uid = str(uid)
+        # self.uid = '{:02x}{:%02x}{:%02x}{:%02x}'.
+        # format(uid[0], uid[1], uid[2], uid[3])
         try:
             self.client = mqtt(client, broker)
             self.client.set_callback(self.mqtt_sub_cb)
@@ -40,19 +32,18 @@ class EVENTS:
                 self.client.connect()
                 print('Connected to %s MQTT broker' % (broker))
             except:
-                print ("error connecting to MQTT broker")
+                print("error connecting to MQTT broker")
                 pass
         except:
             self.broker = broker
             print("MQTT Starting -- exception")
-            self.client = mqtt.Client(client) #create new instance
-            self.client.connect(self.broker) #connect to broker
-            print ("MQTT Done")
+            self.client = mqtt.Client(client)   # create new instance
+            self.client.connect(self.broker)    # connect to broker
+            print("MQTT Done")
 
-    
-    def logit(self,ts,temp, pressure,humidity,device="",delimiter=","):
-        print ("ts=", ts)
-        
+    def logit(self, ts, temp, pressure, humidity, device="", delimiter=","):
+        print("ts=", ts)
+
         try:
             #ts2_fmt = datetime.datetime.strftime(ts, "%m/%d/%Y %H:%M:%S.%f")
             ts2_fmt = datetime.datetime.strftime(ts, "%Y/%m/%d %H:%M:%S.%f")
@@ -65,7 +56,7 @@ class EVENTS:
                    "temp":'{:3.2f}'.format(temp),
 #                   "pressure":str(pressure),
                    "pressure":'{:3.2f}'.format(pressure),
-                   "humidity":'{:3.2f}'.format(humidity)}
+                   "nrg40ct":'{:3.2f}'.format(humidity)}
         d = js.dumps(payload)
         try:
             self.client.publish("sensors/",d)
@@ -84,7 +75,7 @@ class EVENTS:
         #TODO: build store and forward
         #OSError: [Errno 113] EHOSTUNREACH
         #OSError: [Errno 110] ETIMEDOUT
-        
+
     def compare(self,value):
 #        print value, self.counter,
         if value == 0 and self.counter == 60:
@@ -97,8 +88,8 @@ class EVENTS:
             self.counter = value + 1
             self.errcount = self.errcount + 1
             return False
-    
-        
+
+
 class MCP23x17:
 
     def __init__(self,bus,address):
@@ -109,22 +100,22 @@ class MCP23x17:
         self.bus.write_byte_data(self.ADDRESS,1,0) # all is GPIO B output
         self.readA = 0
         print ("****")
-        # Python program to illustrate 
-        # enumerate function in loops 
-        l1 = ["Initilazation Starting","Program is used to track sensors","Each Sensor will Run on it's own timer loop","loop is based on a 1 second sample rate"] 
-      
-        # printing the tuples in object directly 
-        for ele in enumerate(l1): 
-          print (ele) 
-        print 
-        # changing index and printing separately 
-        for count,ele in enumerate(l1,100): 
-          print (count,ele) 
-    
-    
+        # Python program to illustrate
+        # enumerate function in loops
+        l1 = ["Initilazation Starting","Program is used to track sensors","Each Sensor will Run on it's own timer loop","loop is based on a 1 second sample rate"]
+
+        # printing the tuples in object directly
+        for ele in enumerate(l1):
+          print (ele)
+        print
+        # changing index and printing separately
+        for count,ele in enumerate(l1,100):
+          print (count,ele)
+
+
         print ("init completed")
         print ("****")
-    
+
     def read(self):
         """read each of the four 8-bit registers."""
         vals=0
@@ -132,7 +123,7 @@ class MCP23x17:
             self.bus.write_byte_data(self.ADDRESS,0x13,reg) # set GPIO B
             vals+=float(self.bus.read_byte_data(self.ADDRESS,18))*(256**i)
         return int(vals)
-        
+
     def readTwice(self):
         """only return a read if it's gotten twice."""
 #        print "*****self.readA=",self.readA,
@@ -148,9 +139,9 @@ class MCP23x17:
     def reading(self):
         return self.readA
 
-            
+
 class HTU21D:
-    
+
     def __init__(self,bus,address,):
         # i2c bus, if you have a Raspberry Pi Rev A, change this to 0
         # HTU21D-F Commands
@@ -161,7 +152,7 @@ class HTU21D:
         self.wtreg = 0xE6
         self.rdreg = 0xE7
         self.reset = 0xFE
-        
+
     def read_temperature(self):
 ##      handle = bus.i2c_open(bus, addr) # open i2c bus
         self.bus.write_byte(self.addr, self.rdtemp) # send read temp command
@@ -173,7 +164,7 @@ class HTU21D:
         self.temperature = ((temp_reading / 65536) * 175.72 ) - 46.85 # formula from datasheet
         print("%.2f F " %float(self.temperature * 1.8 + 32)),
 
-        
+
         return self.temperature * 1.8 + 32
 
     def read_humidity(self):
@@ -191,8 +182,8 @@ class HTU21D:
         return self.humidity
 
 #    def read_HTU21D(self):
-        
-        
+
+
 class BMP080:
 
     def __init__(self, bus, address, register, length):
@@ -238,7 +229,7 @@ class BMP080:
         self.jay = 9
 
     def read_BMP080(self):
-    
+
         # BMP280 address, 0x76(118)
         # Select Control measurement register, 0xF4(244)
         # 0x27(39) Pressure and Temperature Oversampling rate = 1
@@ -284,16 +275,16 @@ class BMP080:
 
 
 if __name__=="__main__":
-    
-    
-    
 
-    
-    
+
+
+
+
+
     nrg40 = MCP23x17(bus,ADDRESS)
     bmpressure = BMP080(bus, I2C_ADDR, 0x88, 24)
     htuhumidity = HTU21D(bus,I2C_HTU21D)
-    
+
     readA=None
     last_ts = datetime.datetime.utcnow()
     uid = 0x3c71bf2
@@ -303,10 +294,11 @@ if __name__=="__main__":
     lastct = 0
     while True:
         nrg40.readTwice()
-        print (nrg40.reading()),
+        print("NRG: "),
+        print(nrg40.reading()),
         diff = nrg40.reading() - lastct
         lastct = nrg40.reading()
-        print (diff), 
+        print(diff),
         print("%.0f" %diff),
         ts = datetime.datetime.utcnow()
         print(ts),
@@ -314,7 +306,7 @@ if __name__=="__main__":
         todays_hours = ts.hour*3600
         todays_minutes = ts.minute*60
         todays_seconds = ts.second+todays_minutes+todays_hours
-        
+
         difference = ts - last_ts
         total_time = ts - first_ts
         last_ts = ts
@@ -325,16 +317,15 @@ if __name__=="__main__":
         time.sleep(mydelay)
 
         bmpressure.read_BMP080()
-        
+
         #hum =  htuhumidity.read_humidity()
         #hum =  htuhumidity.read_HTU21D()
         #temp = htuhumidity.read_temperature()
-        
+
         if not evnts.compare(last_ts.second):
             print ("reset", evnts.counter),
         print (evnts.errcount),
-        print ()
         lastct = nrg40.reading()
-        
-        evnts.logit(ts,bmpressure.tempC,bmpressure.pressure,0,0x77)
-
+        print("nrg diff:", diff)
+        evnts.logit(ts,bmpressure.tempC,bmpressure.pressure,diff,0x77)
+        print ("", flush=True)
